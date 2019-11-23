@@ -1,0 +1,70 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  tasks:
+  - block: # Homebrew #
+    - name: Check if homebrew is installed
+      shell: which brew | grep /usr/local/
+      ignore_errors: yes
+      changed_when: false
+      register: homebrew_stat
+
+    - name: Ensure Homebrew is installed
+      shell: echo "\n" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      when: homebrew_stat.rc != 0
+
+  - block: # Virtualbox #
+    - name: Check if virtualbox cask is installed
+      command: "brew cask info virtualbox-{{ vbox_version }}"
+      ignore_errors: yes
+      changed_when: false
+      register: cask_stat
+
+    - name: Forces Virtualbox installation in /Applications folder
+      command: "brew cask install --force --appdir=/Applications {{ virtualbox[ansible_os_family].versions[vbox_version].cask_file }}"
+      when:
+      - ansible_os_family == "Darwin"
+      - virtualbox_darwin_force_install
+     
+    - name: Ensure Virtualbox is installed in /Applications folder
+      command: "brew cask install --appdir=/Applications {{ virtualbox[ansible_os_family].versions[vbox_version].cask_file }}"
+      when:
+      - ansible_os_family == "Darwin"
+      - cask_stat.rc != 0
+    vars:
+      vbox_version: "{{ virtualbox_version if ((virtualbox_version is defined) and (virtualbox_version != None)) else virtualbox[ansible_os_family].default_version }}"
+
+  - block: # Virtualbox extensions #
+    - name: Get extensions file
+      get_url:
+        url: "{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.url }}"
+        dest: "/tmp/{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.filename }}"
+        checksum: "{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.checksum }}"
+
+    - name: Install virtualbox package extensions
+      shell: "echo 'y\n' | VBoxManage extpack install --replace /tmp/{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.filename }}"
+      become: yes
+    when: cask_stat.rc == 0
+    vars:
+        vbox_version: "{{ virtualbox_version if ((virtualbox_version is defined) and (virtualbox_version != None)) else virtualbox[ansible_os_family].default_version }}"
+
+  - block: # Vagrant #
+    - name: Check if vagrant cask is installed
+      command: "brew cask info vagrant-{{ vgt_version }}"
+      ignore_errors: yes
+      changed_when: false
+      register: cask_stat
+
+    - name: Forces Vagrant installation
+      command: "brew cask install --force {{ vagrant[ansible_os_family].versions[vgt_version].cask_file }}"
+      when:
+      - ansible_os_family == "Darwin"
+      - vagrant_darwin_force_install
+     
+    - name: Ensure Vagrant is installed
+      command: "brew cask install {{ vagrant[ansible_os_family].versions[vgt_version].cask_file }}"
+      when:
+      - ansible_os_family == "Darwin"
+      - cask_stat.rc != 0
+    vars:
+      vgt_version: "{{ vagrant_version if ((vagrant_version is defined) and (vagrant_version != None)) else vagrant[ansible_os_family].default_version }}"    
