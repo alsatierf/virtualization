@@ -1,0 +1,33 @@
+---
+- block: # Virtualbox #
+  - name: Check if virtualbox cask is installed
+    command: "brew cask info virtualbox-{{ vbox_version }}"
+    ignore_errors: yes
+    changed_when: false
+    register: cask_stat
+
+  - name: Forces Virtualbox installation in /Applications folder
+    command: "brew cask install --force --appdir=/Applications {{ virtualbox[ansible_os_family].versions[vbox_version].cask_file }}"
+    when:
+    - virtualbox_darwin_force_install
+    
+  - name: Ensure Virtualbox is installed in /Applications folder
+    command: "brew cask install --appdir=/Applications {{ virtualbox[ansible_os_family].versions[vbox_version].cask_file }}"
+    when:
+    - cask_stat.rc != 0
+  vars:
+    vbox_version: "{{ virtualbox_version if ((virtualbox_version is defined) and (virtualbox_version != None)) else virtualbox[ansible_os_family].default_version }}"
+
+- block: # Virtualbox extensions #
+  - name: Get extensions file
+    get_url:
+      url: "{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.url }}"
+      dest: "/tmp/{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.filename }}"
+      checksum: "{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.checksum }}"
+
+  - name: Install virtualbox package extensions
+    shell: "echo 'y\n' | VBoxManage extpack install --replace /tmp/{{ virtualbox[ansible_os_family].versions[vbox_version].extensions.filename }}"
+    become: yes
+  when: cask_stat.rc == 0
+  vars:
+    vbox_version: "{{ virtualbox_version if ((virtualbox_version is defined) and (virtualbox_version != None)) else virtualbox[ansible_os_family].default_version }}"

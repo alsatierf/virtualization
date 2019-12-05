@@ -1,0 +1,11 @@
+---
+vagrant:
+  "Darwin":
+    versions:
+      "2.2.6": 
+        cask_file: vagrant-2.2.6.rb
+    default_version: "2.2.6"
+
+vagrant_darwin_force_install: false
+
+vagrant_version: "2.2.6"

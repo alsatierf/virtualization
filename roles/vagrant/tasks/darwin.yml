@@ -1,0 +1,19 @@
+---
+- block:
+  - name: Check if vagrant cask is installed
+    command: "brew cask info vagrant-{{ vgt_version }}"
+    ignore_errors: yes
+    changed_when: false
+    register: cask_stat
+
+  - name: Forces Vagrant installation
+    command: "brew cask install --force {{ vagrant[ansible_os_family].versions[vgt_version].cask_file }}"
+    when:
+    - vagrant_darwin_force_install
+    
+  - name: Ensure Vagrant is installed
+    command: "brew cask install {{ vagrant[ansible_os_family].versions[vgt_version].cask_file }}"
+    when:
+    - cask_stat.rc != 0
+  vars:
+    vgt_version: "{{ vagrant_version if ((vagrant_version is defined) and (vagrant_version != None)) else vagrant[ansible_os_family].default_version }}"    
