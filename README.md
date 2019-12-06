@@ -23,7 +23,7 @@ This module will install Vagrant and Virtualbox on the machine where ansible-pla
 
 Default versions for each of these applications are already provided by the Ansible role default variables [vagrant_version](https://github.com/alsfreitaz/virtualization/blob/4897f043b1a187eb65bef82520967e828a0cdd7c/roles/vagrant/defaults/main.yml#L11) and [virtualbox_version](https://github.com/alsfreitaz/virtualization/blob/4897f043b1a187eb65bef82520967e828a0cdd7c/roles/virtualbox/defaults/main.yml#L15). As with any other Ansible project, the default role variables can be easily overridden if needed (please refer to the official documentation on [using variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html)).
 
-On Mac OS X systems, the main playbook relies on the existence of [Homebrew](https://brew.sh/) to install other the applications using cask so, if not present, it will be downloaded and installed by Ansible beforehand.
+On MacOS X systems, the main playbook relies on the existence of [Homebrew](https://brew.sh/) to install other the applications using cask so, if not present, it will be downloaded and installed by Ansible beforehand.
 
 ## Variables
 
@@ -65,7 +65,7 @@ virtualbox:
 virtualbox_version: VERSION_Z
 ```
 
-For MacOS systems:
+For MacOS X systems:
 
 > `ANSIBLE_OS_FAMILY` must be set to `"Darwin"`. `VERSION_X` is a key to uniquely identify the cask template file to be used to install Virtualbox and when `VERSION_Y == VERSION_X` the `VERSION_X` cask file will be installed **if** variable `virtualbox_version` is not set. If `virtualbox_version` is set to refer to a specific version `VERSION_X` then the cask_file associated with the corresponding template file `CASK_TEMPLATE` will be used.
 
