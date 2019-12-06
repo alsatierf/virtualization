@@ -29,7 +29,7 @@ On MacOS X systems, the main playbook relies on the existence of [Homebrew](http
 
 ### Vagrant Role
 
-The [vagrant](https://github.com/alsfreitaz/virtualization/tree/master/roles/vagrant) role depends on the existence of the following variables:
+The [vagrant](https://github.com/alsfreitaz/virtualization/tree/master/roles/vagrant) role depends on the existence of the following variables (see all [current default values](https://github.com/alsfreitaz/virtualization/blob/master/roles/vagrant/defaults/main.yml)):
 
 ```yaml
 vagrant:
@@ -48,7 +48,7 @@ For MacOS systems:
 
 ### Virtualbox Role
 
-The [virtualbox](https://github.com/alsfreitaz/virtualization/tree/master/roles/virtualbox) role depends on the existence of the following variables:
+The [virtualbox](https://github.com/alsfreitaz/virtualization/tree/master/roles/virtualbox) role depends on the existence of the following variables (see all [current default values](https://github.com/alsfreitaz/virtualization/blob/master/roles/virtualbox/defaults/main.yml)):
 
 ```yaml
 virtualbox:
