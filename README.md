@@ -1,6 +1,8 @@
 # Virtualization
 
-This is an Ansible project which aims to install [Virtualbox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/) locally.
+Oftentimes we need to develop, test or use applications that target operating systems (versions) other than the one we use in a daily basis. In order to save both time and money deploying and provisioning VMs on public clouds, we should be able to develop or test applications targeting these systems first locally (using some sort of virtualization mechanism) and only then start deploying them elsewhere.
+
+With this purpose in mind, this project aims to install [Virtualbox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/) to deliver a safe, automated and reproducible way of providing (*i.e.* creating and managing) VMs on your localhost.
 
 ## Dependencies
 
