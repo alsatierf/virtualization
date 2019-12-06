@@ -27,7 +27,7 @@ On MacOS X systems, the main playbook relies on the existence of [Homebrew](http
 
 ## Variables
 
-### Vagrant
+### Vagrant Role
 
 The [vagrant](https://github.com/alsfreitaz/virtualization/tree/master/roles/vagrant) role depends on the existence of the following variables:
 
@@ -44,9 +44,9 @@ vagrant_version: VERSION_Z
 
 For MacOS systems:
 
-> `ANSIBLE_OS_FAMILY` must be set to `"Darwin"`. `VERSION_X` is a key to uniquely identify the cask template file to be used to install Vagrant and when `VERSION_Y == VERSION_X` the `VERSION_X` cask file will be installed **if** variable `vagrant_version` is not set. If `vagrant_version` is set to refer to a specific version `VERSION_X` then the cask_file associated with the corresponding template file `CASK_TEMPLATE` will be used.
+> `ANSIBLE_OS_FAMILY` must be set to `"Darwin"`. `VERSION_X` is a key to uniquely identify the cask template file used to install a pinned version of Vagrant. When `default_version = VERSION_Y` and `VERSION_Y == VERSION_X`, `VERSION_X` will be installed **if and only if** variable `vagrant_version` is not set. If `vagrant_version` refers to a specific version `VERSION_X` then the corresponding template file `CASK_TEMPLATE` will be used despite the value of `default_version`.
 
-### Virtualbox
+### Virtualbox Role
 
 The [virtualbox](https://github.com/alsfreitaz/virtualization/tree/master/roles/virtualbox) role depends on the existence of the following variables:
 
@@ -67,13 +67,13 @@ virtualbox_version: VERSION_Z
 
 For MacOS X systems:
 
-> `ANSIBLE_OS_FAMILY` must be set to `"Darwin"`. `VERSION_X` is a key to uniquely identify the cask template file to be used to install Virtualbox and when `VERSION_Y == VERSION_X` the `VERSION_X` cask file will be installed **if** variable `virtualbox_version` is not set. If `virtualbox_version` is set to refer to a specific version `VERSION_X` then the cask_file associated with the corresponding template file `CASK_TEMPLATE` will be used.
+> `ANSIBLE_OS_FAMILY` must be set to `"Darwin"`. `VERSION_X` is a key to uniquely identify the cask template file used to install a pinned version of Virtualbox. When `default_version = VERSION_Y` and `VERSION_Y == VERSION_X`, `VERSION_X` will be installed **if and only if** variable `virtualbox_version` is not set. If `virtualbox_version` refers to a specific version `VERSION_X` then the corresponding template file `CASK_TEMPLATE` will be used despite the value of `default_version`.
 
-> The variables `FILENAME`, `URL` and `CHECKSUM` are related to a specific version of Virtualbox described in `CASK_TEMPLATE` and are used to install a matching Virtualbox Extension Pack. The corresponding filename, url and checksum for a given Virtualbox version can be found in the projects' [downloads page](https://www.virtualbox.org/wiki/Downloads).
+> Variables `filename`, `url` and `checksum` are tighly related to a unique matching version of Virtualbox Extension Pack which, in turn, must be related to the specific version of Virtualbox described in `CASK_TEMPLATE`. The values `FILENAME`, `URL` and `CHECKSUM` for a given Virtualbox version can be found in the projects' [downloads page](https://www.virtualbox.org/wiki/Downloads).
 
 ## Supported Systems
 
-Currently, this playbook works only on Mac OS X systems and have been tested against the following configurations:
+Currently, this playbook works only on MacOS X systems and have been tested against the following configurations:
 
 * Ansible 2.9.1
 * Python 3.7.5 (used by Ansible)
