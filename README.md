@@ -4,7 +4,7 @@ Oftentimes we need to develop, test or use applications that target operating sy
 
 With this purpose in mind, this project aims to install [Virtualbox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/) to deliver a safe, idempotent and reproducible way of providing (*i.e.* creating and managing) VMs on your localhost.
 
-*After installing and running this project*, maybe you will need a way of describing VM resources (*i.e.* cpu, memory and networking) and a way of providing (*i.e.* creating VMs) but **also** provisioning (*i.e.* installing dependencies and configuring OS internals) those VMs without needing to write Vagrantfiles for each and every VM or VM group deployed using Vagrant. If you want to achieve a **fully automated and reproducible way of providing and provisioning local VMs using Vagrant, Virtualbox and Ansible** wherever Vagrant and Virtualbox are installed, please check out the tiny [Cognate](https://github.com/alsfreitaz/cognate) framework.
+*After installing Vagrant and Virtualbox*, maybe you will desire to have a way of describing VM resources (*i.e.* cpu, memory and networking) and a way of not only providing (*i.e.* creating VMs) **but also** provisioning (*i.e.* installing dependencies and configuring OS internals) those VMs without needing to write Vagrantfiles for each VM group deployed using Vagrant. If you want to achieve a **fully automated and reproducible way of providing and provisioning local VMs using Vagrant, Virtualbox and Ansible** using templated YAML files instead of Vagranfiles wherever Vagrant and Virtualbox are installed, please check out the tiny [Cognate](https://github.com/alsfreitaz/cognate) framework.
 
 ## Dependencies
 
